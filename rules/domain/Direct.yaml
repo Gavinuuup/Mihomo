@@ -1,9 +1,9 @@
 # NAME: Direct
 # AUTHOR: Gavinuuup
-# UPDATED: 2026-11-02 01:56:42
-# TOTAL: 110536
+# UPDATED: 2026-11-02 02:09:26
+# TOTAL: 110535
 # BASE: 110478
-# CUSTOM: 68
+# CUSTOM: 67
 payload:
   - cpro.baidustatic.com
   - analytics.strava.com
@@ -110540,4 +110540,3 @@ payload:
   - +.555k06.com
   - +.tsrlsf.com
   - +.xiageba.com
-  - +.getclicky.com
