@@ -28,6 +28,9 @@ stun.*.*.*
 +.stun.*.*.*
 +.stun.*.*.*.*
 +.stun.*.*.*.*.*
++.apple.com
++.aaplimg.com
++.akadns.net
 +.market.xiaomi.com
 +.evo.host.aliceinit.dev
 lancache.steamcontent.com
@@ -81,6 +84,3 @@ www.msftconnecttest.com
 +.fastlydns.net
 +.googleapis.cn
 +.xn--ngstr-lra8j.com
-+.apple.com
-+.aaplimg.com
-+.akadns.net
