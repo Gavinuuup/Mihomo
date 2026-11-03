@@ -7,6 +7,10 @@ on:
       - "rules/merge/ChinaMax_IP.yaml"
       - "rules/merge/DirectFix.yaml"
       - "rules/merge/Direct_IPFix.yaml"
+      - "rules/merge/AI.yaml"
+      - "rules/merge/AIFix.yaml"
+      - "rules/merge/AI-IP.yaml"
+      - "rules/merge/AI-IPFix.yaml"
       - ".github/workflows/merge_rules.py"
       - ".github/workflows/merge-rules.yml"
 
@@ -48,7 +52,7 @@ jobs:
       - name: Merge ChinaMax-IP
         run: |
           python .github/workflows/merge_rules.py \
-            Direct_IP Gavinuuup \
+            Direct-IP Gavinuuup \
             rules/merge/ChinaMax_IP.yaml \
             rules/merge/Direct_IPFix.yaml \
             rules/ip/Direct_IP.yaml
@@ -56,7 +60,7 @@ jobs:
       - name: Merge AI-Domain
         run: |
           python .github/workflows/merge_rules.py \
-            Direct Gavinuuup \
+            AI Gavinuuup \
             rules/merge/AI.yaml \
             rules/merge/AIFix.yaml \
             rules/domain/AI.yaml
@@ -64,7 +68,7 @@ jobs:
       - name: Merge AI-IP
         run: |
           python .github/workflows/merge_rules.py \
-            Direct_IP Gavinuuup \
+            AI-IP Gavinuuup \
             rules/merge/AI-IP.yaml \
             rules/merge/AI-IPFix.yaml \
             rules/ip/AI.yaml
@@ -78,7 +82,7 @@ jobs:
             echo "No merged change"
             exit 0
           fi
-          git commit -m "chore: rebuild Direct rules [$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')]"
+          git commit -m "chore: rebuild rules [$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')]"
 
           for i in 1 2 3 4 5; do
             if git push; then
