@@ -74,6 +74,8 @@ local.adguard.org
 dns.msftnsci.com
 www.msftnsci.com
 www.msftconnecttest.com
+win1910.ipv6.microsoft.com
+win10.ipv6.microsoft.com
 +.fastlydns.net
 +.googleapis.cn
 +.xn--ngstr-lra8j.com
