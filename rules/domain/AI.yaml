@@ -1,9 +1,9 @@
 # NAME: AI
 # AUTHOR: Gavinuuup
-# UPDATED: 2026-11-03 18:24:15
-# TOTAL: 427
+# UPDATED: 2026-11-03 18:45:33
+# TOTAL: 428
 # BASE: 427
-# CUSTOM: 0
+# CUSTOM: 1
 payload:
   - 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
   - ai.developer.meta.com
@@ -432,3 +432,4 @@ payload:
   - .zed.dev
   - .zhipuai.cn
   - .zhipucn.com
+  - +.meta.com
