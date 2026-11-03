@@ -37,7 +37,7 @@ jobs:
       - name: Install deps
         run: pip install pyyaml
 
-      - name: Merge Domain
+      - name: Merge ChinaMax-Domain
         run: |
           python .github/workflows/merge_rules.py \
             Direct Gavinuuup \
@@ -45,7 +45,7 @@ jobs:
             rules/merge/DirectFix.yaml \
             rules/domain/Direct.yaml
 
-      - name: Merge IP
+      - name: Merge ChinaMax-IP
         run: |
           python .github/workflows/merge_rules.py \
             Direct_IP Gavinuuup \
@@ -53,11 +53,27 @@ jobs:
             rules/merge/Direct_IPFix.yaml \
             rules/ip/Direct_IP.yaml
 
+      - name: Merge AI-Domain
+        run: |
+          python .github/workflows/merge_rules.py \
+            Direct Gavinuuup \
+            rules/merge/AI.yaml \
+            rules/merge/AIFix.yaml \
+            rules/domain/AI.yaml
+
+      - name: Merge AI-IP
+        run: |
+          python .github/workflows/merge_rules.py \
+            Direct_IP Gavinuuup \
+            rules/merge/AI-IP.yaml \
+            rules/merge/AI-IPFix.yaml \
+            rules/ip/AI.yaml
+
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add rules/domain/Direct.yaml rules/ip/Direct_IP.yaml
+          git add rules/domain/Direct.yaml rules/ip/Direct_IP.yaml rules/domain/AI.yaml rules/ip/AI.yaml
           if git diff --cached --quiet; then
             echo "No merged change"
             exit 0
