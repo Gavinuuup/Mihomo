@@ -41,37 +41,19 @@ jobs:
       - name: Install deps
         run: pip install pyyaml
 
-      - name: Merge ChinaMax-Domain
+      - name: Merge all rule sets
         run: |
-          python .github/workflows/merge_rules.py \
-            Direct Gavinuuup \
-            rules/merge/ChinaMax_Domain.yaml \
-            rules/merge/DirectFix.yaml \
-            rules/domain/Direct.yaml
-
-      - name: Merge ChinaMax-IP
-        run: |
-          python .github/workflows/merge_rules.py \
-            Direct-IP Gavinuuup \
-            rules/merge/ChinaMax_IP.yaml \
-            rules/merge/Direct_IPFix.yaml \
-            rules/ip/Direct_IP.yaml
-
-      - name: Merge AI-Domain
-        run: |
-          python .github/workflows/merge_rules.py \
-            AI Gavinuuup \
-            rules/merge/AI.yaml \
-            rules/merge/AIFix.yaml \
-            rules/domain/AI.yaml
-
-      - name: Merge AI-IP
-        run: |
-          python .github/workflows/merge_rules.py \
-            AI-IP Gavinuuup \
-            rules/merge/AI-IP.yaml \
-            rules/merge/AI-IPFix.yaml \
-            rules/ip/AI.yaml
+          set -e
+          while IFS='|' read -r name base custom out; do
+            echo "===== Merge $name ====="
+            python .github/workflows/merge_rules.py \
+              "$name" Gavinuuup "$base" "$custom" "$out"
+          done <<'EOF'
+Direct|rules/merge/ChinaMax_Domain.yaml|rules/merge/DirectFix.yaml|rules/domain/Direct.yaml
+Direct_IP|rules/merge/ChinaMax_IP.yaml|rules/merge/Direct_IPFix.yaml|rules/ip/Direct_IP.yaml
+AI|rules/merge/AI.yaml|rules/merge/AIFix.yaml|rules/domain/AI.yaml
+AI_IP|rules/merge/AI-IP.yaml|rules/merge/AI-IPFix.yaml|rules/ip/AI.yaml
+EOF
 
       - name: Commit if changed
         run: |
