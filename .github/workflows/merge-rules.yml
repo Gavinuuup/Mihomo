@@ -45,15 +45,24 @@ jobs:
         run: |
           set -e
           while IFS='|' read -r name base custom out; do
+            # 过滤掉可能的 Windows 回车符和空白
+            name=$(echo "$name" | tr -d '\r')
+            base=$(echo "$base" | tr -d '\r')
+            custom=$(echo "$custom" | tr -d '\r')
+            out=$(echo "$out" | tr -d '\r')
+            
+            # 跳过空行
+            [ -z "$name" ] && continue
+
             echo "===== Merge $name ====="
             python .github/workflows/merge_rules.py \
               "$name" Gavinuuup "$base" "$custom" "$out"
           done <<'EOF'
-Direct|rules/merge/ChinaMax_Domain.yaml|rules/merge/DirectFix.yaml|rules/domain/Direct.yaml
-Direct_IP|rules/merge/ChinaMax_IP.yaml|rules/merge/Direct_IPFix.yaml|rules/ip/Direct_IP.yaml
-AI|rules/merge/AI.yaml|rules/merge/AIFix.yaml|rules/domain/AI.yaml
-AI_IP|rules/merge/AI-IP.yaml|rules/merge/AI-IPFix.yaml|rules/ip/AI.yaml
-EOF
+          Direct|rules/merge/ChinaMax_Domain.yaml|rules/merge/DirectFix.yaml|rules/domain/Direct.yaml
+          Direct_IP|rules/merge/ChinaMax_IP.yaml|rules/merge/Direct_IPFix.yaml|rules/ip/Direct_IP.yaml
+          AI|rules/merge/AI.yaml|rules/merge/AIFix.yaml|rules/domain/AI.yaml
+          AI_IP|rules/merge/AI-IP.yaml|rules/merge/AI-IPFix.yaml|rules/ip/AI.yaml
+          EOF
 
       - name: Commit if changed
         run: |
