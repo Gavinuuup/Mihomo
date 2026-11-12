@@ -7,7 +7,7 @@ on:
       - "rules/merge/ChinaMax_IP.yaml"
       - "rules/merge/DirectFix.yaml"
       - "rules/merge/Direct_IPFix.yaml"
-      - "rules/merge/AI.yaml"
+      - "rules/merge/AI.txt"
       - "rules/merge/AIFix.yaml"
       - "rules/merge/AI-IP.yaml"
       - "rules/merge/AI-IPFix.yaml"
@@ -60,7 +60,7 @@ jobs:
           done <<'EOF'
           Direct|rules/merge/ChinaMax_Domain.yaml|rules/merge/DirectFix.yaml|rules/domain/Direct.yaml
           Direct_IP|rules/merge/ChinaMax_IP.yaml|rules/merge/Direct_IPFix.yaml|rules/ip/Direct_IP.yaml
-          AI|rules/merge/AI.yaml|rules/merge/AIFix.yaml|rules/domain/AI.yaml
+          AI|rules/merge/AI.txt|rules/merge/AIFix.yaml|rules/domain/AI.yaml
           AI_IP|rules/merge/AI-IP.yaml|rules/merge/AI-IPFix.yaml|rules/ip/AI.yaml
           EOF
 
