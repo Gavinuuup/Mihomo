@@ -21,10 +21,10 @@ jobs:
 
       - name: Download rule file
         run: |
-          wget -O rules/merge/cn.yaml \
+          wget -O rules/merge/cn.list \
             https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cn.list
 
-          wget -O rules/merge/cn-IP.yaml \
+          wget -O rules/merge/cn-IP.list \
             https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.list
 
           wget -O rules/merge/AI.txt \
