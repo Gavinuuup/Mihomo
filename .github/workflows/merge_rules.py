@@ -2,7 +2,9 @@
 """
 合并两个 Clash 规则集，生成带多行注释头的新规则集。
 支持输入：.yaml / .yml / .list / .txt
-输出：统一 .yaml
+输出：按输出文件扩展名决定
+  - .list / .txt  -> 纯文本，每行一条规则
+  - .yaml / .yml  -> YAML payload
 
 用法: merge_rules.py <name> <author> <base> <custom> <out>
 """
@@ -31,25 +33,21 @@ def normalize(raw):
     if not s or s.startswith("#"):
         return None
 
-    # 去掉尾部逗号
     s = s.rstrip(",").strip()
     if not s:
         return None
 
-    # DOMAIN-SUFFIX,x  ->  +.x
     if CONVERT_SUFFIX_TO_PLUS:
         m = re.fullmatch(r"DOMAIN-SUFFIX\s*,\s*(.+)", s, re.IGNORECASE)
         if m:
             domain = m.group(1).strip().lstrip("+.")
             return f"+.{domain}"
 
-    # DOMAIN,x  ->  x
     if CONVERT_DOMAIN_TO_BARE:
         m = re.fullmatch(r"DOMAIN\s*,\s*(.+)", s, re.IGNORECASE)
         if m:
             return m.group(1).strip()
 
-    # 其他规则统一去掉逗号周围空格：DOMAIN-SUFFIX , x -> DOMAIN-SUFFIX,x
     if "," in s:
         parts = [p.strip() for p in s.split(",")]
         s = ",".join(parts)
@@ -82,26 +80,49 @@ def load_payload(path):
 
     lower = path.lower()
 
-    # .list / .txt 按纯文本逐行读
     if lower.endswith(".list") or lower.endswith(".txt"):
         raw_items = _read_text_lines(content)
     else:
-        # 其他按 YAML 读
         data = yaml.safe_load(content) or {}
         if isinstance(data, dict):
             payload = data.get("payload", []) or []
             raw_items = [str(x).strip() for x in payload if str(x).strip()]
         else:
-            # 顶层不是 dict，兜底当纯文本
             raw_items = _read_text_lines(content)
 
-    # 归一化 + 丢弃无效项
     result = []
     for item in raw_items:
         norm = normalize(item)
         if norm is not None:
             result.append(norm)
     return result
+
+
+def is_text_output(out_path):
+    lower = out_path.lower()
+    return lower.endswith(".list") or lower.endswith(".txt")
+
+
+def write_output(out_path, header, merged):
+    """按输出扩展名写文件：list/txt 纯文本，yaml/yml 走 YAML。"""
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(header)
+
+        if is_text_output(out_path):
+            # 纯文本：每行一条
+            for item in merged:
+                f.write(item + "\n")
+        else:
+            # YAML：payload 列表
+            body = yaml.dump(
+                {"payload": merged},
+                Dumper=IndentDumper,
+                allow_unicode=True,
+                sort_keys=False,
+                default_flow_style=False,
+                width=10**6,
+            )
+            f.write(body)
 
 
 def main():
@@ -122,7 +143,7 @@ def main():
             seen.add(item)
             merged.append(item)
 
-    updated = datetime.datetime.utcnow() + datetime.timedelta(hours=8)  # 北京时间
+    updated = datetime.datetime.utcnow() + datetime.timedelta(hours=8)
     updated_str = updated.strftime("%Y-%m-%d %H:%M:%S")
 
     header = (
@@ -134,18 +155,7 @@ def main():
         f"# CUSTOM: {len(custom)}\n"
     )
 
-    body = yaml.dump(
-        {"payload": merged},
-        Dumper=IndentDumper,
-        allow_unicode=True,
-        sort_keys=False,
-        default_flow_style=False,
-        width=10**6,
-    )
-
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(header)
-        f.write(body)
+    write_output(out_path, header, merged)
 
     print(f"[ok] {out_path}: base={len(base)} custom={len(custom)} total={len(merged)}")
 
