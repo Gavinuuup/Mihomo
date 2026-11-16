@@ -55,9 +55,9 @@ def normalize_to_yaml(raw):
     if s.startswith("+."):
         return f"DOMAIN-SUFFIX,{s[2:]}"
 
-    # 裸域名（不含逗号、不含斜杠、不是 IP 段）-> DOMAIN-SUFFIX
+    # 裸域名 -> DOMAIN 精确匹配（保持 .list 在 behavior: domain 下的原始语义）
     if "," not in s and "/" not in s:
-        if "," not in s and "/" not in s:
+        return f"DOMAIN,{s}"
 
     # 其他规则原样保留，只去掉逗号周围空格
     if "," in s:
