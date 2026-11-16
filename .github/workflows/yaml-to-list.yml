@@ -44,20 +44,21 @@ jobs:
       - name: Convert all pairs
         run: |
           set -e
-          while IFS='|' read -r in out; do
+          while IFS='|' read -r type in out; do
+            type=$(echo "$type" | tr -d '\r')
             in=$(echo "$in" | tr -d '\r')
             out=$(echo "$out" | tr -d '\r')
-            [ -z "$in" ] && continue
+            [ -z "$type" ] && continue
 
-            echo "===== $in -> $out ====="
-            python .github/workflows/yaml_to_list.py "$in" "$out"
+            echo "===== [$type] $in -> $out ====="
+            python .github/workflows/yaml_to_list.py "$type" "$in" "$out"
           done <<'EOF'
-          rules/domain/AI.list|rules/AI.yaml
-          rules/domain/Proxy.list|rules/Proxy.yaml
-          rules/domain/cn.list|rules/cn.yaml
-          rules/domain/Streaming-cn.list|rules/Streaming-cn.yaml
-          rules/ip/AI.list|rules/AI-ip.yaml
-          rules/ip/cn.list|rules/cn-ip.yaml
+          domain|rules/domain/AI.list|rules/AI.yaml
+          domain|rules/domain/Proxy.list|rules/Proxy.yaml
+          domain|rules/domain/cn.list|rules/cn.yaml
+          domain|rules/domain/Streaming-cn.list|rules/Streaming-cn.yaml
+          ipcidr|rules/ip/AI.list|rules/AI-ip.yaml
+          ipcidr|rules/ip/cn.list|rules/cn-ip.yaml
           EOF
 
       - name: Commit if changed
