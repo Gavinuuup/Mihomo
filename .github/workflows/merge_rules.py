@@ -121,6 +121,8 @@ def write_output(out_path, header, merged):
                 sort_keys=False,
                 default_flow_style=False,
                 width=10**6,
+                # 缩进：不写或 indent=2 为 2 空格；indent=4 为 4 空格
+                # indent=4,
             )
             f.write(body)
 
