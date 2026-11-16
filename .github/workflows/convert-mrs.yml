@@ -18,7 +18,7 @@ on:
       - "rules/ip/**/*.list"
 
   workflow_run:
-    workflows: ["Merge Rules", "Convert YAML to List"]
+    workflows: ["Merge Rules"]
     types:
       - completed
 
