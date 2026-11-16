@@ -26,6 +26,12 @@ import sys
 import yaml
 
 
+class IndentDumper(yaml.Dumper):
+    """让列表作为字典值时也带缩进（覆盖 PyYAML 默认的 indentless）。"""
+    def increase_indent(self, flow=False, indentless=False):
+        return super().increase_indent(flow, False)
+
+
 # ---------- 通用工具 ----------
 
 def is_text_path(path):
@@ -63,11 +69,12 @@ def write_output(path, lines):
             yaml.dump(
                 {"payload": lines},
                 f,
+                Dumper=IndentDumper,
                 allow_unicode=True,
                 sort_keys=False,
                 default_flow_style=False,
                 width=10**6,
-                indent=4,  # 首行缩进4
+                indent=4,
             )
 
 
