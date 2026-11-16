@@ -1,12 +1,24 @@
-name: Convert YAML to List
+name: Convert YAML <-> List
 
 on:
+  workflow_run:
+    workflows:
+      - "Merge Rules"
+      - "Convert Mihomo Rules to MRS"
+    types:
+      - completed
+
   push:
     paths:
-      - "rules/merge/DirectFix.yaml"
-      # - "rules/merge/Direct_IPFix.yaml"
+      - "rules/domain/AI.list"
+      - "rules/domain/Proxy.list"
+      - "rules/domain/cn.list"
+      - "rules/domain/Streaming-cn.list"
+      - "rules/ip/AI.list"
+      - "rules/ip/cn.list"
       - ".github/workflows/yaml_to_list.py"
       - ".github/workflows/yaml-to-list.yml"
+
   workflow_dispatch:
 
 permissions:
@@ -29,28 +41,35 @@ jobs:
       - name: Install deps
         run: pip install pyyaml
 
-      - name: Convert DirectFix.yaml -> DirectFix.list
+      - name: Convert all pairs
         run: |
-          python .github/workflows/yaml_to_list.py \
-            rules/merge/DirectFix.yaml \
-            rules/domain/DirectFix.list
+          set -e
+          while IFS='|' read -r in out; do
+            in=$(echo "$in" | tr -d '\r')
+            out=$(echo "$out" | tr -d '\r')
+            [ -z "$in" ] && continue
 
-      # - name: Convert Direct_IPFix.yaml -> Direct_IPFix.list
-      #   run: |
-      #     python .github/workflows/yaml_to_list.py \
-      #       rules/merge/Direct_IPFix.yaml \
-      #       rules/ip/Direct_IPFix.list
+            echo "===== $in -> $out ====="
+            python .github/workflows/yaml_to_list.py "$in" "$out"
+          done <<'EOF'
+          rules/domain/AI.list|rules/AI.yaml
+          rules/domain/Proxy.list|rules/Proxy.yaml
+          rules/domain/cn.list|rules/cn.yaml
+          rules/domain/Streaming-cn.list|rules/Streaming-cn.yaml
+          rules/ip/AI.list|rules/AI-ip.yaml
+          rules/ip/cn.list|rules/cn-ip.yaml
+          EOF
 
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add rules/domain/DirectFix.list
+          git add rules/domain/DirectFix.list rules/ip/Direct_IPFix.list
           if git diff --cached --quiet; then
             echo "No change"
             exit 0
           fi
-          git commit -m "chore: rebuild DirectFix list [$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')]"
+          git commit -m "chore: rebuild converted rules [$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')]"
 
           for i in 1 2 3 4 5; do
             if git push; then
