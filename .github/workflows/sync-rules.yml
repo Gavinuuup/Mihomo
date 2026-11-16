@@ -33,6 +33,9 @@ jobs:
           wget -O rules/merge/AI-IP.yaml \
             https://magicrule.pages.dev/data/_shared/artifacts/GlobalAI_ipcidr_cb1b2d369866b4bf.yaml
 
+          wget -O rules/merge/Proxy.list \
+            https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/geolocation-!cn.list
+
       - name: Commit and push if changed
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
