@@ -11,6 +11,8 @@ on:
       - "rules/merge/AIFix.list"
       - "rules/merge/AI-IP.yaml"
       - "rules/merge/AI-IPFix.list"
+      - "rules/merge/Proxy.list"
+      - "rules/merge/ProxyFix.list"
       - ".github/workflows/merge_rules.py"
       - ".github/workflows/merge-rules.yml"
 
@@ -62,13 +64,14 @@ jobs:
           cn-IP|rules/merge/cn-IP.list|rules/merge/Direct-IPFix.list|rules/ip/cn.list
           AI|rules/merge/AI.txt|rules/merge/AIFix.list|rules/domain/AI.list
           AI_IP|rules/merge/AI-IP.yaml|rules/merge/AI-IPFix.list|rules/ip/AI.list
+          Proxy|rules/merge/Proxy.list|rules/merge/ProxyFix.list|rules/domain/Proxy.list
           EOF
 
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add rules/domain/cn.list rules/ip/cn.list rules/domain/AI.list rules/ip/AI.list
+          git add rules/domain/cn.list rules/ip/cn.list rules/domain/AI.list rules/ip/AI.list rules/domain/Proxy.list
           if git diff --cached --quiet; then
             echo "No merged change"
             exit 0
