@@ -76,7 +76,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add rules/domain/cn.list rules/ip/cn.list rules/domain/AI.list rules/ip/AI.list rules/domain/Proxy.list
+          git add rules/domain/cn.list rules/ip/cn.list rules/domain/AI.list rules/ip/AI.list rules/domain/Proxy.list rules/cn.yaml rules/cn-ip.yaml rules/AI.yaml rules/AI-ip.yaml rules/Proxy.yaml
           if git diff --cached --quiet; then
             echo "No merged change"
             exit 0
