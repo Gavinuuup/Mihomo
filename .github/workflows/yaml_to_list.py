@@ -1,98 +1,61 @@
 #!/usr/bin/env python3
 """
-YAML <-> List 双向转换。
-输入格式自动识别（按扩展名），输出格式由输出文件扩展名决定：
-  - .list / .txt -> 纯文本，每行一条规则
+YAML <-> List 双向转换（区分 domain / ipcidr 两类）。
+
+用法:
+  yaml_to_list.py <type> <in> <out>
+
+  <type> = domain | ipcidr
+  <in>   = 输入文件（.yaml/.yml/.list/.txt）
+  <out>  = 输出文件（.yaml/.yml/.list/.txt）
+
+方向由输出扩展名决定：
+  - .list / .txt -> 纯文本
   - .yaml / .yml -> YAML payload
 
-用法: yaml_to_list.py <in> <out>
+domain 类:
+  .list:  +.x  / 裸域名
+  YAML :  +.x  / 裸域名
+  classical 写法会转成上面的形式
+
+ipcidr 类:
+  .list / YAML: 裸 CIDR
+  classical 写法会去掉 IP-CIDR 前缀
 """
 import sys
 import yaml
 
 
-def normalize_to_text(raw):
-    """把一条规则转成 text 写法，返回 None 表示丢弃。"""
-    s = str(raw).strip()
-    if not s or s.startswith("#"):
-        return None
+# ---------- 通用工具 ----------
 
-    s = s.rstrip(",").strip()
-    if not s:
-        return None
-
-    # DOMAIN-SUFFIX,x  ->  +.x
-    if s.upper().startswith("DOMAIN-SUFFIX"):
-        parts = s.split(",", 1)
-        if len(parts) == 2:
-            domain = parts[1].strip().lstrip("+.")
-            return f"+.{domain}"
-
-    # DOMAIN,x  ->  x
-    if s.upper().startswith("DOMAIN,"):
-        parts = s.split(",", 1)
-        if len(parts) == 2:
-            return parts[1].strip()
-
-    if "," in s:
-        parts = [p.strip() for p in s.split(",")]
-        s = ",".join(parts)
-
-    return s
+def is_text_path(path):
+    lower = path.lower()
+    return lower.endswith(".list") or lower.endswith(".txt")
 
 
-def normalize_to_yaml(raw):
-    """把 text 写法转回 YAML 规则写法，返回 None 表示丢弃。"""
-    s = str(raw).strip()
-    if not s or s.startswith("#"):
-        return None
-
-    s = s.rstrip(",").strip()
-    if not s:
-        return None
-
-    # +.x  ->  DOMAIN-SUFFIX,x
-    if s.startswith("+."):
-        return f"DOMAIN-SUFFIX,{s[2:]}"
-
-    # 裸域名 -> DOMAIN 精确匹配（保持 .list 在 behavior: domain 下的原始语义）
-    if "," not in s and "/" not in s:
-        return f"DOMAIN,{s}"
-
-    # 其他规则原样保留，只去掉逗号周围空格
-    if "," in s:
-        parts = [p.strip() for p in s.split(",")]
-        s = ",".join(parts)
-
-    return s
+def strip_comments(lines):
+    return [ln.strip() for ln in lines if ln.strip() and not ln.strip().startswith("#")]
 
 
 def read_input(path):
-    """按扩展名读取：list/txt 纯文本，其他 YAML。返回字符串列表。"""
+    """按扩展名读取，返回原始字符串列表。"""
     with open(path, encoding="utf-8") as f:
         content = f.read()
 
-    lower = path.lower()
-
-    if lower.endswith(".list") or lower.endswith(".txt"):
-        return [ln.strip() for ln in content.splitlines() if ln.strip() and not ln.strip().startswith("#")]
+    if is_text_path(path):
+        return strip_comments(content.splitlines())
 
     data = yaml.safe_load(content) or {}
     if isinstance(data, dict):
         payload = data.get("payload", []) or []
         return [str(x).strip() for x in payload if str(x).strip()]
 
-    return [ln.strip() for ln in content.splitlines() if ln.strip() and not ln.strip().startswith("#")]
-
-
-def is_text_output(path):
-    lower = path.lower()
-    return lower.endswith(".list") or lower.endswith(".txt")
+    return strip_comments(content.splitlines())
 
 
 def write_output(path, lines):
     with open(path, "w", encoding="utf-8") as f:
-        if is_text_output(path):
+        if is_text_path(path):
             f.write("\n".join(lines))
             if lines:
                 f.write("\n")
@@ -107,20 +70,76 @@ def write_output(path, lines):
             )
 
 
+# ---------- domain 类 ----------
+
+def domain_to_canonical(raw):
+    """把任意 domain 写法规整成 mihomo domain 类的规范写法。
+    - DOMAIN-SUFFIX,x -> +.x
+    - DOMAIN,x        -> x
+    - +.x / 裸域名    -> 原样
+    """
+    s = raw.strip()
+    if not s:
+        return None
+
+    up = s.upper()
+
+    if up.startswith("DOMAIN-SUFFIX"):
+        parts = s.split(",", 1)
+        if len(parts) == 2:
+            return f"+.{parts[1].strip().lstrip('+.')}"
+
+    if up.startswith("DOMAIN,"):
+        parts = s.split(",", 1)
+        if len(parts) == 2:
+            return parts[1].strip()
+
+    return s
+
+
+# ---------- ipcidr 类 ----------
+
+def ipcidr_to_canonical(raw):
+    """把任意 ipcidr 写法规整成裸 CIDR。
+    - IP-CIDR,x   -> x
+    - IP-CIDR6,x  -> x
+    - 裸 CIDR     -> 原样
+    """
+    s = raw.strip()
+    if not s:
+        return None
+
+    up = s.upper()
+
+    if up.startswith("IP-CIDR6"):
+        parts = s.split(",", 1)
+        if len(parts) == 2:
+            return parts[1].strip()
+
+    if up.startswith("IP-CIDR"):
+        parts = s.split(",", 1)
+        if len(parts) == 2:
+            return parts[1].strip()
+
+    return s
+
+
+# ---------- 主流程 ----------
+
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print(__doc__)
         sys.exit(1)
 
-    in_path, out_path = sys.argv[1], sys.argv[2]
+    rtype, in_path, out_path = sys.argv[1], sys.argv[2], sys.argv[3]
+
+    if rtype not in ("domain", "ipcidr"):
+        print(f"ERROR: unsupported type: {rtype}")
+        sys.exit(1)
 
     raw_items = read_input(in_path)
 
-    # 根据输出方向选择归一化函数
-    if is_text_output(out_path):
-        norm_fn = normalize_to_text
-    else:
-        norm_fn = normalize_to_yaml
+    norm_fn = domain_to_canonical if rtype == "domain" else ipcidr_to_canonical
 
     lines = []
     seen = set()
@@ -135,7 +154,7 @@ def main():
 
     write_output(out_path, lines)
 
-    print(f"[ok] {in_path} -> {out_path}: {len(lines)} lines")
+    print(f"[ok] {rtype}: {in_path} -> {out_path}: {len(lines)} lines")
 
 
 if __name__ == "__main__":
