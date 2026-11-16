@@ -67,6 +67,7 @@ def write_output(path, lines):
                 sort_keys=False,
                 default_flow_style=False,
                 width=10**6,
+                indent=4,  # 首行缩进4
             )
 
 
