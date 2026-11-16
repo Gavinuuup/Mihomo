@@ -1,100 +1,100 @@
 payload:
-  - DOMAIN-SUFFIX,41319.shop
-  - DOMAIN-SUFFIX,hhiec.com
-  - DOMAIN-SUFFIX,zbiptv.com
-  - DOMAIN-SUFFIX,52kukan.net
-  - DOMAIN-SUFFIX,7xdy.com
-  - DOMAIN-SUFFIX,qqarc.com
-  - DOMAIN-SUFFIX,baidustatic.com
-  - DOMAIN-SUFFIX,itmop.com
-  - DOMAIN-SUFFIX,itmopcdn.com
-  - DOMAIN-SUFFIX,hwxz999.com
-  - DOMAIN-SUFFIX,ppkkzz.com
-  - DOMAIN-SUFFIX,seagm.com
-  - DOMAIN-SUFFIX,lk888.ai
-  - DOMAIN-SUFFIX,reflix.top
-  - DOMAIN-SUFFIX,snfaka.com
-  - DOMAIN-SUFFIX,zbds.top
-  - DOMAIN-SUFFIX,lianxiwo.top
-  - DOMAIN-SUFFIX,openappfilter.com
+    - +.41319.shop
+    - +.hhiec.com
+    - +.zbiptv.com
+    - +.52kukan.net
+    - +.7xdy.com
+    - +.qqarc.com
+    - +.baidustatic.com
+    - +.itmop.com
+    - +.itmopcdn.com
+    - +.hwxz999.com
+    - +.ppkkzz.com
+    - +.seagm.com
+    - +.lk888.ai
+    - +.reflix.top
+    - +.snfaka.com
+    - +.zbds.top
+    - +.lianxiwo.top
+    - +.openappfilter.com
 # 天气服务(大部分需要ip定位，所以必须加ipinfo)
   # - DOMAIN-SUFFIX,open-meteo.com
   # - DOMAIN-SUFFIX,ipinfo.io
 # github 直连镜像
-  - DOMAIN-SUFFIX,gh-proxy.com
+    - +.gh-proxy.com
 # keke1
-  - DOMAIN-SUFFIX,keke1.app
-  - DOMAIN-SUFFIX,kekys.com
+    - +.keke1.app
+    - +.kekys.com
 # lucky
-  - DOMAIN-SUFFIX,lucky.gd
+    - +.lucky.gd
 # 123
-  - DOMAIN-SUFFIX,beizi.biz
+    - +.beizi.biz
 # via
-  - DOMAIN-SUFFIX,viayoo.com
+    - +.viayoo.com
 # 三星
-  - DOMAIN-SUFFIX,galaxyappstore.com
-  - DOMAIN-SUFFIX,samsungapps.com
+    - +.galaxyappstore.com
+    - +.samsungapps.com
 # 肥羊
-  - DOMAIN,myip.ipip.net
-  - DOMAIN,r.inews.qq.com
+    - myip.ipip.net
+    - r.inews.qq.com
 # 淘宝支付宝
-  - DOMAIN-SUFFIX,mmstat.com
-  - DOMAIN-SUFFIX,mediav.com
-  - DOMAIN-SUFFIX,aliapp.org
-  - DOMAIN-SUFFIX,yundps.com
-  - DOMAIN-SUFFIX,quhaotui.com
-  - DOMAIN-SUFFIX,quchuangsh.com
-  - DOMAIN-SUFFIX,pop2me.com
-  - DOMAIN-SUFFIX,alimama.com
-  - DOMAIN-SUFFIX,tanwuya.com
-  - DOMAIN-SUFFIX,boxiantech.com
-  - DOMAIN-SUFFIX,rumt-zh.com
+    - +.mmstat.com
+    - +.mediav.com
+    - +.aliapp.org
+    - +.yundps.com
+    - +.quhaotui.com
+    - +.quchuangsh.com
+    - +.pop2me.com
+    - +.alimama.com
+    - +.tanwuya.com
+    - +.boxiantech.com
+    - +.rumt-zh.com
 # 念音网
-  - DOMAIN-SUFFIX,nianyin.com
+    - +.nianyin.com
 # iptv
-  - DOMAIN-SUFFIX,iill.top
-  - DOMAIN-SUFFIX,hardcoremedia.xyz
-  - DOMAIN-SUFFIX,ottc.pro
-  - DOMAIN-SUFFIX,douzhicloud.site
+    - +.iill.top
+    - +.hardcoremedia.xyz
+    - +.ottc.pro
+    - +.douzhicloud.site
 # 小众软件
-  - DOMAIN-SUFFIX,appinn.net
+    - +.appinn.net
 # PT站
-  - DOMAIN-SUFFIX,pterclub.net
+    - +.pterclub.net
 # 云盘类
-  - DOMAIN-SUFFIX,qileso.com
-  - DOMAIN-SUFFIX,xiaotusoso.com
-  - DOMAIN-SUFFIX,duanjugou.top
+    - +.qileso.com
+    - +.xiaotusoso.com
+    - +.duanjugou.top
 # SheepFJ 快捷指令
-  - DOMAIN-SUFFIX,brainiac.top
+    - +.brainiac.top
 # 八字排盘
-  - DOMAIN-SUFFIX,mifengzongdongyuan.com
+    - +.mifengzongdongyuan.com
 # 历史上的今天 app
-  - DOMAIN-SUFFIX,luckfast.com
-  - DOMAIN-SUFFIX,myqcloud.com
+    - +.luckfast.com
+    - +.myqcloud.com
 # InsCode(快马)
-  - DOMAIN-SUFFIX,inscode.net
+    - +.inscode.net
 # 基元律动  
-  - DOMAIN-SUFFIX,tokenrhythm.studio
+    - +.tokenrhythm.studio
 # 优6壁纸
-  - DOMAIN-SUFFIX,youliu.cc
+    - +.youliu.cc
 # deepseek
-  - DOMAIN-SUFFIX,yunyudown.com
+    - +.yunyudown.com
 # 哈基米纪念日
-  - DOMAIN-SUFFIX,laowaidrivetest.com
-  - DOMAIN-SUFFIX,getui.com
-  - DOMAIN-SUFFIX,mzfanyi.vip
-  - DOMAIN-SUFFIX,guoxiehao.com
+    - +.laowaidrivetest.com
+    - +.getui.com
+    - +.mzfanyi.vip
+    - +.guoxiehao.com
 # 在下莫老师
-  - DOMAIN-SUFFIX,xn--ghqy5t5uf651b82d.com
+    - +.xn--ghqy5t5uf651b82d.com
 # 66办公
-  - DOMAIN-SUFFIX,66office.com
+    - +.66office.com
 # 红果第三方
-  - DOMAIN-SUFFIX,hongguoduanju.com
+    - +.hongguoduanju.com
 # 适配工具箱
-  - DOMAIN-SUFFIX,70kz.com
+    - +.70kz.com
 # 555影视
-  - DOMAIN-SUFFIX,555k06.com
+    - +.555k06.com
 # 唐山热力
-  - DOMAIN-SUFFIX,tsrlsf.com
+    - +.tsrlsf.com
 # 下歌吧
-  - DOMAIN-SUFFIX,xiageba.com
+    - +.xiageba.com
