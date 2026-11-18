@@ -1,8 +1,8 @@
 # NAME: AI
 # AUTHOR: Gavinuuup
-# UPDATED: 2026-11-17 16:55:53
-# TOTAL: 313
-# BASE: 311
+# UPDATED: 2026-11-18 16:20:51
+# TOTAL: 314
+# BASE: 312
 # CUSTOM: 2
 +.agentclientprotocol.com
 +.ai.com
@@ -285,6 +285,7 @@ gateway.icloud.com
 gemini.google.com
 geminiweb-pa.clients.google.com
 geminiweb-pa.clients6.google.com
+graph.facebook.com
 gspe1-ssl.ls.apple.com
 guzzoni.apple.com
 http-intake.logs.us5.datadoghq.com
