@@ -9,7 +9,7 @@ on:
       - "rules/merge/Direct-IPFix.list"
       - "rules/merge/AI.txt"
       - "rules/merge/AIFix.list"
-      - "rules/merge/AI-IP.yaml"
+      - "rules/merge/AI-IP.txt"
       - "rules/merge/AI-IPFix.list"
       - "rules/merge/Proxy.list"
       - "rules/merge/ProxyFix.list"
