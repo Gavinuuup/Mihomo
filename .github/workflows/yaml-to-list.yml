@@ -3,7 +3,6 @@ name: Convert YAML <-> List
 on:
   workflow_run:
     workflows:
-      - "Merge Rules"
       - "Convert Mihomo Rules to MRS"
     types:
       - completed
