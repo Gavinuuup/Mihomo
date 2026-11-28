@@ -63,7 +63,7 @@ jobs:
           cn|rules/merge/cn.list|rules/merge/DirectFix.list|rules/domain/cn.list
           cn-IP|rules/merge/cn-IP.list|rules/merge/Direct-IPFix.list|rules/ip/cn.list
           AI|rules/merge/AI.txt|rules/merge/AIFix.list|rules/domain/AI.list
-          AI_IP|rules/merge/AI-IP.yaml|rules/merge/AI-IPFix.list|rules/ip/AI.list
+          AI_IP|rules/merge/AI-IP.txt|rules/merge/AI-IPFix.list|rules/ip/AI.list
           Proxy|rules/merge/Proxy.list|rules/merge/ProxyFix.list|rules/domain/Proxy.list
           EOF
 
