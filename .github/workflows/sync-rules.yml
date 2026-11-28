@@ -31,7 +31,7 @@ jobs:
             https://raw.githubusercontent.com/666OS/rules/refs/heads/release/mihomo/domain/AI.txt
 
           wget -O rules/merge/AI-IP.yaml \
-            https://magicrule.pages.dev/data/_shared/artifacts/GlobalAI_ipcidr_cb1b2d369866b4bf.yaml
+            https://raw.githubusercontent.com/666OS/rules/refs/heads/release/mihomo/ip/AI.txt
 
           wget -O rules/merge/Proxy.list \
             https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/geolocation-!cn.list
