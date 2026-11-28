@@ -30,7 +30,7 @@ jobs:
           wget -O rules/merge/AI.txt \
             https://raw.githubusercontent.com/666OS/rules/refs/heads/release/mihomo/domain/AI.txt
 
-          wget -O rules/merge/AI-IP.yaml \
+          wget -O rules/merge/AI-IP.txt \
             https://raw.githubusercontent.com/666OS/rules/refs/heads/release/mihomo/ip/AI.txt
 
           wget -O rules/merge/Proxy.list \
